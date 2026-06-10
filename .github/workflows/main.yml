@@ -1,0 +1,23 @@
+name: Verificacao Simples
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  verificar-arquivos:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositorio
+        uses: actions/checkout@v4
+
+      - name: Mostrar data da execucao
+        run: date
+
+      - name: Verificar arquivos
+        run: |
+          test -f index.html
+          test -f style.css
+          test -f script.js

@@ -34,7 +34,9 @@ services:
 
   # Serviço 3: Frontend HTML/CSS/JS servido por Nginx
   frontend:
-    build: ./frontend
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
     container_name: todo-frontend
     ports:
       - "80:80"

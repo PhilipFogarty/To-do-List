@@ -1,0 +1,51 @@
+services:
+
+  # Serviço 1: Banco de dados PostgreSQL (imagem oficial, zero código)
+  db:
+    image: postgres:15-alpine
+    container_name: todo-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: todo
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - todo-network
+
+  # Serviço 2: Backend Node.js + Express
+  backend:
+    build: ./backend
+    container_name: todo-backend
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: todo
+    depends_on:
+      - db
+    networks:
+      - todo-network
+    restart: on-failure   # reinicia enquanto o postgres ainda está subindo
+
+  # Serviço 3: Frontend HTML/CSS/JS servido por Nginx
+  frontend:
+    build: ./frontend
+    container_name: todo-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - todo-network
+
+volumes:
+  db-data:
+
+networks:
+  todo-network:
+    driver: bridge

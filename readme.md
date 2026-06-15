@@ -1,6 +1,6 @@
 # To-Do List — Docker Compose
 
-Aplicação de lista de tarefas com persistência em banco de dados, containerizada com Docker Compose.
+Aplicação de lista de tarefas com persistência em banco de dados, containerizada com Docker Compose. Utiliza Github Actions com um workflow que gera uma imagem do frontend e a armazena no Github Container Registry a partir de todo commit realizado na branch main.
 
 ---
 
